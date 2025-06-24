@@ -1,0 +1,13 @@
+# The main pipeline for dabs_ws_python
+resources:
+  pipelines:
+    dabs_ws_python_pipeline:
+      name: dabs_ws_python_pipeline
+      catalog: pponna_demo
+      schema: dabs_ws_python_${bundle.target}
+      libraries:
+        - notebook:
+            path: ../src/dlt_pipeline.ipynb
+
+      configuration:
+        bundle.sourcePath: ${workspace.file_path}/src

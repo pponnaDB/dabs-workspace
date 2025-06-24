@@ -1,0 +1,30 @@
+# This is a Databricks asset bundle definition for dabs_ws_python.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: dabs_ws_python
+  uuid: 23b14a5d-7ac0-4599-99ec-36136843c12a
+
+include:
+  - resources/*.yml
+  - resources/*/*.yml
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    mode: development
+    default: true
+    workspace:
+      host: https://e2-demo-field-eng.cloud.databricks.com
+
+  prod:
+    mode: production
+    workspace:
+      host: https://e2-demo-field-eng.cloud.databricks.com
+      # We explicitly deploy to /Workspace/Users/praveen.ponna@databricks.com to make sure we only have a single copy.
+      root_path: /Workspace/Users/praveen.ponna@databricks.com/.bundle/${bundle.name}/${bundle.target}
+    permissions:
+      - user_name: praveen.ponna@databricks.com
+        level: CAN_MANAGE
